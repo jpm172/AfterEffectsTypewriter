@@ -1,1 +1,1 @@
-# AfterEffectsTypewriter
+# After Effects Typewriter
