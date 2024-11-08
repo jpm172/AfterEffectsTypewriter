@@ -63,6 +63,11 @@ pauseSlider.onChanging = function()
 }
 
 
+var punctuationGroup = panel.add("group", undefined, "");
+punctuationGroup.orientation = "row";
+var punctuationText = punctuationGroup.add("statictext", undefined, "Punctation: ");
+var punctuationEditText = punctuationGroup.add("edittext", undefined, ".,!?;");
+punctuationEditText.characters = 7;
 
 window.center();
 window.show();
@@ -93,12 +98,10 @@ function modifyLayers()
 
     var advancedSettings = layer.selectedProperties[0].property("ADBE Text Animators").property(1).property("ADBE Text Selectors").property(1).property("ADBE Text Range Advanced");
     var basedOn = advancedSettings.property("ADBE Text Range Type2").value;
-    //alert(layer.selectedProperties[0].matchName);
 
     
     
-    var punctuation = ".,!?;";
-
+    var punctuation = punctuationEditText.text;
 
     //remove the newline characters from the string
     var plainText = sourceText.value.text.replace(/\r/g,"");
@@ -138,12 +141,6 @@ function modifyLayers()
 
     
     //create ending keyframe
-    /*
-    alert("Plaintext Length = " + plainText.length +"\nDuration without pauses = " + (plainText.length/ charsPerSec)
-    + "\nThere are " + indices.length + " pauses for a total of " + indices.length*pauseSlider.value + " seconds"
-    + "The final keyframe should be at " + ((plainText.length / charsPerSec)+ indices.length*pauseSlider.value) );
-    */
-
     keyIndex = start.addKey( (plainText.length / charsPerSec)+ indices.length*pauseSlider.value ); 
     start.setValueAtKey(keyIndex, plainText.length);
     start.setInterpolationTypeAtKey(keyIndex, KeyframeInterpolationType.LINEAR);
@@ -152,9 +149,6 @@ function modifyLayers()
     {
         var headPos = (indices[i]/charsPerSec) + pauseSlider.value*i;
         var tailPos = ( (indices[i])/charsPerSec)  + pauseSlider.value*(i+1);
-
-        //alert("head should be at time " + indices[i]/charsPerSec 
-        //+ "\ntail should be at time " + (( (indices[i] + offsets[i])/charsPerSec)  + pauseSlider.value));
 
         var key1 = start.addKey( headPos  );
         start.setValueAtKey(key1, indices[i]);
@@ -166,37 +160,6 @@ function modifyLayers()
 
     }
     
-/*
-    var headPos = (indices[i] + offsets[i])/charsPerSec;
-    var tailPos = ( (indices[i] + offsets[i])/charsPerSec)  + pauseSlider.value;
-
-    var key1 = start.addKey( headPos  );
-    start.setValueAtKey(key1, indices[i]);
-    start.setInterpolationTypeAtKey(key1, KeyframeInterpolationType.LINEAR);     
-
-    var key2 = start.addKey( tailPos );
-    start.setValueAtKey(key2, indices[i] );
-    start.setInterpolationTypeAtKey(key2, KeyframeInterpolationType.LINEAR);
-*/
-
-
-    /* BRUTE FORCE VERSION - WORKS
-    //this places a hold keyframe at every index in the string, and will skip forward when it hits punctuation to create the "pause"
-    var delayOffset = 0;
-    for(var i = 0; i < plainText.length; i++)
-    {
-        var keyIndex = start.addKey(comp.frameDuration*(i+delayOffset));
-
-        start.setValueAtKey(keyIndex, i);
-        start.setInterpolationTypeAtKey(keyIndex, KeyframeInterpolationType.HOLD);
-
-        if ( i > 0 && contains( puncuation, plainText[i-1] ) )
-        {
-            delayOffset += 20;
-        }
-
-    }
-    */
 }
 
 function containsPunctuation(punctuation, str  )
