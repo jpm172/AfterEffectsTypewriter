@@ -1,5 +1,5 @@
 
-var window = new Window("palette", "Punctuation Pauses", undefined);
+var window = new Window("palette", "Typewriter", undefined);
 window.orientation = "column";
 
 var group = window.add("group", undefined, "");
@@ -40,7 +40,7 @@ CPSslider.onChanging = function()
 //Create Pause Duration Slider Group
 var pauseGroup = panel.add("group", undefined, "");
 pauseGroup.orientation = "row";
-var pauseText = pauseGroup.add("statictext", undefined, "Pause Duration: ");
+var pauseText = pauseGroup.add("statictext", undefined, "Pause Duration (seconds): ");
 
 var pauseSlider = pauseGroup.add("slider", undefined);
 pauseSlider.minvalue = 0;
@@ -65,7 +65,7 @@ pauseSlider.onChanging = function()
 
 var punctuationGroup = panel.add("group", undefined, "");
 punctuationGroup.orientation = "row";
-var punctuationText = punctuationGroup.add("statictext", undefined, "Punctation: ");
+var punctuationText = punctuationGroup.add("statictext", undefined, "Punctuation: ");
 var punctuationEditText = punctuationGroup.add("edittext", undefined, ".,!?;");
 punctuationEditText.characters = 7;
 
