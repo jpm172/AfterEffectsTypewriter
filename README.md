@@ -7,3 +7,7 @@ A [custom script](https://helpx.adobe.com/after-effects/using/scripts.html#:~:te
 * **Characters/Second**: The rate at which each character will be revealed. Can be changed with the slider or entered into the value box.
 * **Pause Duration**: How long the animation will pause once a punctuation mark is reached. Can be changed with the slider or entered into the value box.
 * **Punctuation**: the list of characters that count as punctuation. Can be changed by editing the input field.
+
+## Instructions
+1. Add an opacity animator to your text layer ![Settings](/images/addAnimateStep.png)
+2. 
